@@ -130,6 +130,7 @@ export default {
         )
         .catch(error => {
           this.isError = true;
+          console.log(error);
         })
     ]);
 
@@ -143,6 +144,7 @@ export default {
         })
         .catch(error => {
           this.isError = true;
+          console.log(error);
           return {};
         });
     }
@@ -154,6 +156,7 @@ export default {
           .get(`https://blockstream.info/api/block/${hash}/txids`)
           .catch(error => {
             this.isError = true;
+            console.log(error);
           })
       ]);
       let tempArr = [];

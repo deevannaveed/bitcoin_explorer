@@ -19,9 +19,9 @@
       <template slot="id" slot-scope="data">
         <b-link
           :to="{
-                    name: 'blockSearchByHash',
-                    params: { blockHash: data.value }
-                  }"
+              name: 'blockSearchByHash',
+              params: { blockHash: data.value }
+            }"
         >{{ data.value }}</b-link>
       </template>
       <template slot="size" slot-scope="data">{{ data.value }} bytes</template>
@@ -51,7 +51,7 @@ export default {
     };
   },
   methods: {
-    blocksProvider(ctx) {
+    blocksProvider() {
       let promise = axios.get("https://blockstream.info/api/blocks");
       this.isBusy = false;
       return promise
@@ -61,6 +61,7 @@ export default {
         })
         .catch(error => {
           this.isBusy = false;
+          console.log(error);
           return [];
         });
     }

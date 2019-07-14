@@ -1,7 +1,7 @@
 <template>
   <div class="search-result">
     <h6 class="main-title">
-      Details for block hash:
+      Details for block hash id:
       <b-badge class="text-wrap text-break text-left" variant="dark">{{ this.$route.params.blockHash }}</b-badge>
     </h6>
     <div>
@@ -143,6 +143,7 @@ export default {
           .get(`https://blockstream.info/api/block/${hash}/txids`)
           .catch(error => {
             this.isError = true;
+            console.log(error);
           })
       ]);
       let tempArr = [];
