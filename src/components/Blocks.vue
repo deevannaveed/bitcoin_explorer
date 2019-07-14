@@ -9,10 +9,20 @@
       :fields="fields"
     >
       <template slot="height" slot-scope="data">
-          <b-link :to="{
+        <b-link
+          :to="{
           name: 'blockSearch',
           params: { blockHeight: data.value }
-        }">{{ data.value }}</b-link>
+        }"
+        >{{ data.value }}</b-link>
+      </template>
+      <template slot="id" slot-scope="data">
+        <b-link
+          :to="{
+                    name: 'blockSearchByHash',
+                    params: { blockHash: data.value }
+                  }"
+        >{{ data.value }}</b-link>
       </template>
       <template slot="size" slot-scope="data">{{ data.value }} bytes</template>
       <template slot="timestamp" slot-scope="data">{{ data.value | formatDate}}</template>
@@ -27,13 +37,17 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-import { setTimeout } from 'timers';
 
 export default {
   data() {
     return {
-      fields: ["height", "id", "size", { key: "timestamp", label: "Mined" }],
-      isBusy: false,
+      fields: [
+        "height",
+        { key: "id", label: "Hash" },
+        "size",
+        { key: "timestamp", label: "Mined" }
+      ],
+      isBusy: false
     };
   },
   methods: {
@@ -46,7 +60,7 @@ export default {
           return items;
         })
         .catch(error => {
-          this.isBusy = false
+          this.isBusy = false;
           return [];
         });
     }
@@ -54,7 +68,7 @@ export default {
   filters: {
     formatDate: function(value) {
       if (value) {
-        return moment(value).format("h:mm A");
+        return moment.unix(value).format("h:mm A");
       }
     }
   }

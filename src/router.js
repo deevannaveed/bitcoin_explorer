@@ -16,10 +16,12 @@ export default new Router({
     {
       path: '/block-height/:blockHeight',
       name: 'blockSearch',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/SearchResult.vue')
+      component: () => import('./views/SearchResult.vue')
+    },
+    {
+      path: '/block-hash/:blockHash',
+      name: 'blockSearchByHash',
+      component: () => import('./views/SearchResultByHash.vue')
     }
   ]
 })

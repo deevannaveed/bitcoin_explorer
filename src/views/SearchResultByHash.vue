@@ -1,8 +1,8 @@
 <template>
   <div class="search-result">
     <h6 class="main-title">
-      Details for block height:
-      <b-badge class="text-break text-left" variant="dark">{{ this.$route.params.blockHeight }}</b-badge>
+      Details for block hash:
+      <b-badge class="text-wrap text-break text-left" variant="dark">{{ this.$route.params.blockHash }}</b-badge>
     </h6>
     <div>
       <b-card show variant="primary" v-if="!isError">
@@ -123,29 +123,18 @@ export default {
   },
 
   async mounted() {
-    const [blockHash] = await Promise.all([
-      axios
-        .get(
-          `https://blockstream.info/api/block-height/${this.$route.params.blockHeight}`
-        )
-        .catch(error => {
-          this.isError = true;
-        })
-    ]);
-
-    if (blockHash) {
-      axios
-        .get(`https://blockstream.info/api/block/${blockHash.data}`)
-        .then(response => {
-          if (response.data) {
-            this.blockData = [response.data];
-          }
-        })
-        .catch(error => {
-          this.isError = true;
-          return {};
-        });
-    }
+    axios
+      .get(`https://blockstream.info/api/block/${this.$route.params.blockHash}`)
+      .then(response => {
+        if (response.data) {
+          this.blockData = [response.data];
+        }
+      })
+      .catch(error => {
+        this.isError = true;
+        console.log(error);
+        return {};
+      });
   },
   methods: {
     async listTransactions(hash) {
